@@ -12,7 +12,6 @@ spec:
           - name: batch-arch-sostitutivo-container
             image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-sostitutivo
             imagePullPolicy: Always
-            apiVersion: apps/v1
             env:
                 - name: CHANNEL_ID
                   value: "SMS"
