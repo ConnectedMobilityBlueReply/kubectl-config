@@ -1,3 +1,24 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: batch-sync-cronjob-email
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: s3
+          containers:
+          - name: batch-sync-container-email
+            image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-sync
+            imagePullPolicy: Always
+            env:
+                - name: CHANNEL_ID
+                  value: "synchJobEml"
+          restartPolicy: OnFailure
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -8,6 +29,7 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: s3
           containers:
           - name: batch-arch-sostitutivo-container
             image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-sostitutivo
@@ -27,6 +49,7 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: s3
           containers:
           - name: batch-arch-sostitutivo-container
             image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-sostitutivo
@@ -46,6 +69,7 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: s3
           containers:
           - name: batch-documentale-sms-container
             image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-documentale
@@ -65,6 +89,7 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: s3
           containers:
           - name: batch-documentale-email-container
             image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-documentale
@@ -84,6 +109,7 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: s3
           containers:
           - name: batch-sync-container-sms
             image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-sync
@@ -91,23 +117,4 @@ spec:
             env:
                 - name: CHANNEL_ID
                   value: "synchJobSms"
-          restartPolicy: OnFailure
----
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: batch-sync-cronjob-email
-spec:
-  schedule: "*/1 * * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: batch-sync-container-email
-            image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-sync
-            imagePullPolicy: Always
-            env:
-                - name: CHANNEL_ID
-                  value: "synchJobEml"
           restartPolicy: OnFailure
