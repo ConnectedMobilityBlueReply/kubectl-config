@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: batch-doc-email-job
+spec:
+  template:
+    spec:
+      serviceAccountName: s3
+      containers:
+      - name: batch-documentale-email-container
+        image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-documentale
+        imagePullPolicy: Always
+        env:
+          - name: CHANNEL_ID
+            value: "EMAIL"
+      restartPolicy: OnFailure

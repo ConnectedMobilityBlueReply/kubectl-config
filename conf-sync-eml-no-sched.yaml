@@ -1,0 +1,17 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: batch-sync-email-job
+spec:
+  template:
+    spec:
+      serviceAccountName: s3
+      containers:
+      - name: batch-sync-container-email
+        image: 905418348110.dkr.ecr.eu-central-1.amazonaws.com/unipol-stargate-euc1-archiviazione-comunicazioni-ecr-dev:batch-sync
+        imagePullPolicy: Always
+        env:
+          - name: CHANNEL_ID
+            value: "synchJobEml"
+      restartPolicy: OnFailure
